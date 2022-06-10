@@ -89,31 +89,7 @@
     <link rel="alternate" title="News feed - RSS" type="application/rss+xml" href="https://www.brycewray.com/index.xml" />
     <link rel="alternate" title="News feed - JSON" type="application/feed+json" href="https://www.brycewray.com/index.json" />
 
-    {{/* CSS/SCSS */ -}}
-    <!--
-    <link rel="preload" href="/fonts/Inter-3-19_subset_2021-06-18.woff2" crossorigin="anonymous" as="font" type="font/woff2" />
-    <link rel="preload" href="/fonts/PublicSans-Regular-VF-2-001_2022-05-11_subset.woff2" crossorigin="anonymous" as="font" type="font/woff2" />
-    <link rel="preload" href="/fonts/PublicSans-Italic-VF-2-001_2022-05-11_subset.woff2" crossorigin="anonymous" as="font" type="font/woff2" />
-    -->
-    {{/*-
-      Dart Sass Embedded stuff herein:
-      - Based on https://discourse.gohugo.io/t/using-dart-sass-hugo-and-netlify/37099/7
-      - thanks, @bep!
-    -*/}}
-    {{- $css := "" -}}
-    {{- $cssBuild := "" -}}
-    {{- $optionsCSS := (dict "transpiler" "dartsass") -}}
-    {{- $optionsCSSFile := merge $optionsCSS (dict "targetPath" "css/index.css") -}}
-    {{- $optionsCSSFileComp := merge $optionsCSSFile (dict "outputStyle" "compressed") -}}
-    {{- $cssBuild = slice (resources.Get "scss/critical.scss") -}}
-    {{- if in .Params.tags "contact" -}}
-      {{- $cssBuild = $cssBuild | append (resources.Get "scss/_billboard.scss") -}}
-    {{- end -}}
-    {{- $css := $cssBuild | resources.Concat "scss/css.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
-    {{/*- Fingerprinting even in dev, due to Safari weirdness -*/}}
-    <link rel="stylesheet" href="{{ $css.RelPermalink }}" type="text/css">
-    <link rel="preload" as="style" href="{{ $css.RelPermalink }}">
-    {{/* end, CSS/SCSS */}}
+    {{ partial "css.html" . }}
 
     {{- if hugo.IsProduction -}}
     {{/*- Fathom - beautiful, simple website analytics -*/}}

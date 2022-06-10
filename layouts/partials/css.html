@@ -1,0 +1,36 @@
+    {{/* CSS/SCSS */ -}}
+    <!--
+    <link rel="preload" href="/fonts/Inter-3-19_subset_2021-06-18.woff2" crossorigin="anonymous" as="font" type="font/woff2" />
+    <link rel="preload" href="/fonts/PublicSans-Regular-VF-2-001_2022-05-11_subset.woff2" crossorigin="anonymous" as="font" type="font/woff2" />
+    <link rel="preload" href="/fonts/PublicSans-Italic-VF-2-001_2022-05-11_subset.woff2" crossorigin="anonymous" as="font" type="font/woff2" />
+    -->
+    {{/*-
+      Dart Sass Embedded stuff herein:
+      - Based on https://discourse.gohugo.io/t/using-dart-sass-hugo-and-netlify/37099/7
+      - thanks, @bep!
+    -*/}}
+    {{- $css := "" -}}
+    {{- $optionsCSS := (dict "transpiler" "dartsass") -}}
+    {{- $optionsCritical := merge $optionsCSS (dict "outputStyle" "compressed") -}}
+    {{- $optionsCSSFile := merge $optionsCSS (dict "targetPath" "css/index.css") -}}
+    {{- $optionsCSSFileComp := merge $optionsCSSFile (dict "outputStyle" "compressed") -}}
+    {{- $CSS_critical := resources.Get "scss/critical.scss" | resources.ToCSS $optionsCritical -}}
+    <style nonce="DhcnhD3khTMePgXw">{{- $CSS_critical.Content | safeCSS -}}</style>
+    {{- $CSS_twitter := resources.Get "scss/_twitter.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_chroma_native_tweaked := resources.Get "scss/_chroma_native_tweaked.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_chromaFixAll := resources.Get "scss/_chroma_fix-all.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_tables := resources.Get "scss/_tables.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_billboard := resources.Get "scss/_billboard.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_posts := resources.Get "scss/_posts.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_footnotes := resources.Get "scss/_footnotes.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_home := resources.Get "scss/_home.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_lazyload := resources.Get "scss/_lazyload.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_lazypic := resources.Get "scss/_lazypic.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_sitemaphtml := resources.Get "scss/_sitemaphtml.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- $CSS_liteYtEmbed := resources.Get "scss/_lite-yt-embed.scss" | resources.ToCSS $optionsCSSFileComp | fingerprint "md5" -}}
+    {{- if in .Params.tags "contact" -}}
+      {{- $CSS_bi = $cssBuild | append (resources.Get "scss/_billboard.scss") -}}
+      <link rel="preload" as="style" href="{{ $CSS_billboard.RelPermalink }}">
+      <link rel="stylesheet" href="{{ $CSS_billboard.RelPermalink }}" type="text/css">
+    {{- end -}}
+    {{/* end, CSS/SCSS */}}
